@@ -63,7 +63,7 @@ if (isset($_POST['submit'])) {
 <body>
 
 
-    <form action="add.php" method="post" id="myForm" enctype="multipart/form-data">
+    <form method="post" id="myForm" enctype="multipart/form-data">
 
         <section class="vh-100" style="background-color: #2779e2;>
                 <div class=" container h-100">
@@ -137,11 +137,9 @@ if (isset($_POST['submit'])) {
                                 <div class="col-md-9 pe-5 d-flex">
 
                                     <h6 class="mb-0 px-4">Male</h6>
-                                    <input type="radio" name="gender" value="male" />
-
+                                    <input class="radio" type="radio" value="male" name="gender" />
                                     <h6 class="mb-0 px-4">Female</h6>
-                                    <input type="radio" name="gender" value="female" />
-
+                                    <input class="radio" type="radio" value="female" name="gender" />
                                 </div>
                                 <span class="genderErr text-danger" style="display: none; margin-left: 350px">Gender is
                                     required</span>
@@ -193,9 +191,8 @@ if (isset($_POST['submit'])) {
                             <hr class="mx-n3">
 
                             <div class="px-5 py-4">
-                                <button type="button" id="submit" class="btn btn-primary btn-lg">Submit new
+                                <button type="" name="submit" class="btn btn-primary btn-lg">Submit new
                                     user</button>
-
                             </div>
 
                         </div>
@@ -302,13 +299,25 @@ if (isset($_POST['submit'])) {
         </section>
 
 
-    
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js" crossorigin="anonymous"
+            referrerpolicy="no-referrer"></script>
         <script>
+            $(document).ready(function () {
+                $(".delete-button").click(function () {
+                    var id = $(this).data("id");
+                    if (confirm('Are you sure you want to delete this user?')) {
+                        window.location.href = "http://localhost/crud/delete.php?id=" + id;
+                    } else {
+                        // Do nothing or add a different redirection
+                    }
 
-            const submitButton = document.getElementById("submit");
+                });
+            });
 
-            submitButton.addEventListener("click", function (event) {
 
+            const form = document.getElementById("myForm");
+
+            form.addEventListener("submit", function (event) {
                 const nameInput = document.getElementById("nameInput");
                 const emailInput = document.getElementById("emailInput");
                 const phoneInput = document.getElementById("phoneInput");
@@ -339,49 +348,44 @@ if (isset($_POST['submit'])) {
                 if (nameInput.value.trim() === "") {
                     nameSpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault(); // Prevent form submission
                 }
 
                 if (emailInput.value.trim() === "") {
                     emailSpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault();
                 }
-
 
                 if (phoneInput.value.trim() === "") {
                     phoneSpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault();
                 }
 
                 if (phoneInput.value.trim().length !== 10) {
                     phoneVerifySpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault();
                 }
 
                 if (document.querySelector("input[name='gender']:checked") === null) {
                     genderSpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault();
                 }
 
                 if (document.querySelector("input[name='hobbies[]']:checked") === null) {
                     hobbiesSpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault();
                 }
+
                 if (fileInput.files.length === 0) {
                     fileSpan.style.display = "inline";
                     isValid = false;
-                    event.preventDefault();
                 }
 
-                if (isValid) {
-                    this.action = "app.php";
+                if (!isValid) {
+                    event.preventDefault();
+                } else {
+                    form.action = "app.php";
                 }
-            }
+            });
 
         </script>
     </body>

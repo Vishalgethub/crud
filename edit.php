@@ -332,6 +332,7 @@ if (isset($_POST['submit'])) {
         const form = document.getElementById("myForm");
 
         form.addEventListener("submit", function (event) {
+          event.preventDefault();
           const nameInput = document.getElementById("nameInput");
           const emailInput = document.getElementById("emailInput");
           const phoneInput = document.getElementById("phoneInput");
@@ -359,36 +360,30 @@ if (isset($_POST['submit'])) {
           // Validate inputs
           if (nameInput.value.trim() === "") {
             nameSpan.style.display = "inline";
-            event.preventDefault(); // Prevent form submission
+             // Prevent form submission
           }
 
           if (emailInput.value.trim() === "") {
             emailSpan.style.display = "inline";
-            event.preventDefault();
           }
 
           if (phoneInput.value.trim() === "") {
             phoneSpan.style.display = "inline";
-            event.preventDefault();
           }
 
           if (phoneInput.value.trim().length !== 10) {
             phoneVerifySpan.style.display = "inline";
-            event.preventDefault();
           }
 
           if (document.querySelector("input[name='gender']:checked") === null) {
             genderSpan.style.display = "inline";
-            event.preventDefault();
           }
 
           if (document.querySelector("input[name='hobbies[]']:checked") === null) {
             hobbiesSpan.style.display = "inline";
-            event.preventDefault();
           }
           if (fileInput.files.length === 0) {
             fileSpan.style.display = "inline";
-            event.preventDefault();
           }
         });
       </script>
